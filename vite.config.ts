@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  base: "/Vereteno/",
   plugins: [
     react(),
     VitePWA({
@@ -18,8 +19,8 @@ export default defineConfig({
         name: "Звёздное Веретено",
         short_name: "Веретено",
         description: "НРИ-помощник (офлайн)",
-        start_url: "/",
-        scope: "/",
+        start_url: "/Vereteno/",
+        scope: "/Vereteno/",
         display: "standalone",
         background_color: "#0f0505",
         theme_color: "#ef4444",
@@ -49,10 +50,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // кешируем всё, что Vite собирает (JS/CSS/fonts/images)
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2,woff,ttf,json}"],
         cleanupOutdatedCaches: true,
-        navigateFallback: "/index.html",
+        navigateFallback: "/Vereteno/index.html",
       },
     }),
   ],
