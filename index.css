@@ -1,0 +1,49 @@
+/* Локальные шрифты (офлайн, из node_modules).
+   ВАЖНО: @import должны идти до любых правил, включая @tailwind. */
+@import "@fontsource/russo-one/index.css";
+@import "@fontsource-variable/jura/index.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Russo One";
+  --font-ui: "Jura Variable";
+
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background-color: #0f0505;
+  color: #e2e8f0;
+  background-image: radial-gradient(circle at 50% 50%, #1c0a0a 0%, #0f0505 100%);
+}
+
+/* Заголовки/акцентный шрифт */
+h1, h2, h3, .font-display {
+  font-family: var(--font-display), var(--font-ui), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* scrollbar (не сеть, чисто стили) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0505;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b0f0f;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
+}
