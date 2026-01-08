@@ -1402,8 +1402,8 @@ type StarMapLocation = {
 };
 
 const STAR_MAP_LOCATIONS: Record<StarMapLocationId, StarMapLocation> = {
-  aslidov_zub: {
-    id: 'aslidov_zub',
+  aspidov_zub: {
+    id: 'aspidov_zub',
     title: 'Аспидов Зуб (Крупная колония)',
     sector: 'Чеканный',
     population: '42 тыс.',
