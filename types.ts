@@ -1,283 +1,420 @@
 
-export enum AttributeName {
-  BODY = 'Телосложение',
-  AGILITY = 'Ловкость',
-  INTELLECT = 'Интеллект',
-  EMPATHY = 'Эмпатия',
-}
-export enum ItemCategory {
-  MELEE = 'Оружие ближнего боя',
-  RANGED = 'Оружие дальнего боя',
-  PISTOLS = 'Пистолеты',
-  CARABINS = 'Карабины',
-  RIFLES = 'Винтовки',
-  SHOTGUNS = 'Дробовики',
-  HEAVYS = 'Тяжелое оружие',
-  ARMOR = 'Броня',
-  OUTFIT = 'Одежда',
-  EXPLOSIVE = 'Взрывчатка',
-  GEAR = 'Снаряжение',
-  ELIXIR = 'Элексир',
-  CONSUMABLE = 'consumable',  // аптечки, стимы, гранаты, патроны и т.п.
-  TOOL = 'tool',              // инструменты / наборы
-  OTHER = 'other',            // всё, что не попало выше
+
+export enum ClassType {
+  ARTIFICER = 'Artificer',
+  BARBARIAN = 'Barbarian',
+  BARD = 'Bard',
+  CLERIC = 'Cleric',
+  DRUID = 'Druid',
+  FIGHTER = 'Fighter',
+  MONK = 'Monk',
+  PALADIN = 'Paladin',
+  RANGER = 'Ranger',
+  ROGUE = 'Rogue',
+  SORCERER = 'Sorcerer',
+  WARLOCK = 'Warlock',
+  WIZARD = 'Wizard',
+  CUSTOM = 'Custom'
 }
 
-export interface ItemModifiers {
-  hpBonus?: number;
-  energyBonus?: number;
-  attributeBonus?: Partial<Record<AttributeName, number>>;
-  // при необходимости добавишь сюда урон, броню и т.п.
+export enum RaceType {
+  AARAKOCRA = 'Aarakocra',
+  AASIMAR = 'Aasimar',
+  AUTOGNOME = 'Autognome',
+  BUGBEAR = 'Bugbear',
+  CENTAUR = 'Centaur',
+  CHANGELING = 'Changeling',
+  DHAMPIR = 'Dhampir',
+  DRAGONBORN = 'Dragonborn',
+  DWARF = 'Dwarf',
+  DWARF1 = 'Dwarf1',
+  ELF = 'Elf',
+  ELF1 = 'Elf1',
+  FAIRY = 'Fairy',
+  FIRBOLG = 'Firbolg',
+  GENASI = 'Genasi',
+  GIFF = 'Giff',
+  GITH = 'Gith',
+  GNOME = 'Gnome',
+  GNOME1 = 'Gnome1',
+  GOBLIN = 'Goblin',
+  GOLIATH = 'Goliath',
+  GOLIATH24 = 'Goliath24',
+  GRUNG = 'Grung',
+  HADOZEE = 'Hadozee',
+  HALF_ELF = 'Half-Elf',
+  HALF_ORC = 'Half-Orc',
+  HALFLING = 'Halfling',
+  HARENGON = 'Harengon',
+  HEXBLOOD = 'Hexblood',
+  HOBGOBLIN = 'Hobgoblin',
+  HUMAN = 'Human',
+  HUMANALT = 'HumanAlt',
+  KALASHTAR = 'Kalashtar',
+  KENKU = 'Kenku',
+  KOBOLD = 'Kobold',
+  LEONIN = 'Leonin',
+  LIZARDFOLK = 'Lizardfolk',
+  LOCATHAH = 'Locathah',
+  LOXODON = 'Loxodon',
+  MINOTAUR = 'Minotaur',
+  ORC = 'Orc',
+  OWLIN = 'Owlin',
+  PLASMOID = 'Plasmoid',
+  REBORN = 'Reborn',
+  SATYR = 'Satyr',
+  SHIFTER = 'Shifter',
+  TABAXI = 'Tabaxi',
+  THRI_KREEN = 'Thri-kreen',
+  TIEFLING = 'Tiefling',
+  TIEFLING1 = 'Tiefling1',
+  TORTLE = 'Tortle',
+  TRITON = 'Triton',
+  VERDAN = 'Verdan',
+  WARFORGED = 'Warforged',
+  YUAN_TI = 'Yuan-Ti',
+  KHENRA = 'Khenra',
+  CUSTOM = 'Custom'
 }
 
-export enum Faction {
-  DEMOS = 'Демосы',
-  COMMUNE = 'Коммуна',
-  PEDDLERS = 'Коробейники',
-  FRONTIERS = 'Фронтир',
-  CHURCH = 'Единая Церковь',
-  OUTCASTS = 'Изгои',
-}
+export type Ruleset = '2014' | '2024';
 
-export enum GreatClan {
-  WOLF = 'Клан Волка',
-  EAGLE = 'Клан Орла',
-  SNAKE = 'Клан Змеи',
-  RAM = 'Клан Овна',
-  OWL = 'Клан Совы',
-  BEAR = 'Клан Медведя',
-}
-
-// Kept for backward compat in logic, but UI will use text input for Clan usually
-export enum Clan {
-  SVAROG_HEAVY_INDUSTRIES = 'Тяжелая Пром. Сварога',
-  PERUN_VANGUARD = 'Авангард Перуна',
-  VELES_TRADE_GUILD = 'Торговая Гильдия Велеса',
-  MOKOSH_LIFE_WEAVERS = 'Био-Ткачи Мокоши',
-  MARA_SHADOWS = 'Тени Мары',
-  FREE_COSMONAUT = 'Вольный Космонавт',
-}
-
-export enum God {
-  ROD = 'Род (Первооснова)',
-  SVAROG = 'Сварог (Небесный кузнец)',
-  PERUN = 'Перун (Громовержец)',
-  DAZHBOG = 'Даждьбог (Солнечный ветер)',
-  YARILO = 'Ярило (Весенний жар)',
-  STRIBOG = 'Стрибог (Владыка ветров)',
-  HORS = 'Хорс (Солнечный страж)',
-  VELES = 'Велес (Змей мудрости)',
-  MOKOSH = 'Мокошь (Пряха судеб)',
-  LADA = 'Лада (Матерь согласия)',
-  MARA = 'Мара (Хозяйка зимы)',
-  CHUR = 'Чур (Хранитель границ)',
-  EDINY = 'Единый (Один над всеми)',
-  ATHEIST = 'Атеист (Без богов)',
+export interface Stats {
+  str: number;
+  dex: number;
+  con: number;
+  int: number;
+  wis: number;
+  cha: number;
 }
 
 export interface Skill {
   id: string;
+  nameRu: string;
+  stat: keyof Stats;
+  proficient: boolean;
+  expertise: boolean;
+}
+
+export interface Spell {
+  id: string;
   name: string;
-  baseAttribute: AttributeName | 'Особое';
-  value: number;
-  isSpecial?: boolean;
+  nameRu?: string; // Optional Russian name if source is English
+  level: number;
+  school: string;
+  description: string;
+  prepared: boolean;
+  classes?: string[]; // Should match ClassType enum values
+  ruleset?: Ruleset; // Legacy single ruleset
+  rulesets?: Ruleset[]; // New array support for multi-version spells
+  
+  // Detailed Props
+  castingTime?: string;
+  range?: string;
+  duration?: string;
+  components?: string;
+  materials?: string; // New: Description of material components
+  
+  // Logic Props
+  ritual?: boolean;
+  concentration?: boolean;
+  
+  // Casting Logic
+  type: 'attack' | 'save' | 'heal' | 'utility';
+  damage?: string; // Base damage dice e.g. "1d8" or "8d6"
+  damageType?: string; // "fire", "necrotic"
+  
+  scaling?: 'none' | 'slot' | 'character'; // How it scales
+  scalingDamage?: string; // Extra dice per slot e.g. "1d8"
+  
+  savingThrow?: keyof Stats; // "dex", "wis"
+  saveEffect?: 'half' | 'none' | 'special'; // What happens on success
+  
+  addModToDamage?: boolean; // Add spellcasting modifier to damage/heal?
 }
-export type ItemCategory =
-  | 'melee'
-  | 'ranged'
-  | 'PISTOLS'
-  | 'CARABINS'
-  | 'RIFLES'
-  | 'SHOTGUNS'
-  | 'HEAVYS'
-  | 'armor'
-  | 'explosive'
-  | 'gear'
-  | 'elixir';
 
-export interface WeaponStats {
-  // "Мод." из таблицы
-  modifier: number;
-  // "Иниц." из таблицы
-  initiative: number;
-  // "Урон" из таблицы
-  damage: number;
-  // "Дистанция"
-  range: number | null;
-  // "Крит."
-  crit: number | null;
-  // "Свойства"
-  properties: string[];
-
-  // Вместимость магазина (для оружия, использующего патроны)
-  ammoCapacity?: number;
+export interface Weapon {
+  id: string;
+  name: string;
+  damageDie: string; 
+  damageType: string; // New: Base damage type (Slashing, etc.)
+  stat: keyof Stats; 
+  proficient: boolean;
+  magicBonus: number; 
+  isRanged: boolean;
+  range?: string; 
+  usesAmmo: boolean;
+  ammoCount: number;
+  extraDamage?: {
+    die: string; 
+    type: string; 
+  };
+  mastery?: string; // Weapon Mastery (2024)
 }
 
-
-
+export interface Armor {
+  id: string;
+  name: string;
+  type: 'Light' | 'Medium' | 'Heavy' | 'None';
+  baseAC: number;
+  dexBonus: boolean; // Does it add Dex?
+  maxDex?: number; // Max dex bonus (e.g. 2 for medium)
+  stealthDisadvantage: boolean;
+  strReq: number;
+  description?: string; // New field for custom armor description
+  magicBonus?: number; // Magic bonus to AC
+}
 
 export interface InventoryItem {
   id: string;
   name: string;
-  description: string;
   quantity: number;
+  notes: string; 
+}
 
-  // Вес одного предмета (в условных единицах для пересчёта в ячейки)
-  weight?: number;
+export interface Wallet {
+  cp: number; 
+  sp: number; 
+  ep: number; 
+  gp: number; 
+  pp: number; 
+}
 
-  // Надет ли предмет на персонаже
-  equipped: boolean;
+export interface SpellSlots {
+  [level: number]: {
+    value: number; 
+    max: number;   
+  };
+}
 
-  // Категория и цена
-  category?: ItemCategory;
-  price?: number | null;
+export interface PactMagicSlots {
+  current: number;
+  max: number;
+  level: number; // The spell level (1-5)
+}
 
-  // Базовый id из магазина (если предмет куплен)
-  baseId?: string;
+ export interface Feature {
+	id: string;
+	name: string;
+	source: 'Race' | 'Class' | 'Subclass' | 'Subrace' | 'Feat' | 'Other';
+	description: string;
+	ruleset?: Ruleset;      // 2014 или 2024, если черта привязана к редакции
+	minLevel?: number;      // минимальный уровень персонажа для этой черты
+	uses?: {
+	current: number;
+    max: number;
+	refresh: 'Short' | 'Long' | 'None';
+   };
+ }
 
-  // Модификаторы, если есть
-  modifiers?: ItemModifier[];
-
-  // Статы оружия
-  weaponStats?: WeaponStats;
-
-  // Текущие патроны для оружия с магазином
-  ammo?: number;
-
-  // true — предмет хранится в личной каюте и НЕ учитывается в весе
-  // false или undefined — предмет в рюкзаке/при себе и учитывается в весе
-  storedInCabin?: boolean;
+export interface DerivedBonuses {
+  initiative: number;
 }
 
 
-
-
-export interface ShopItem {
-  id: string;              // стабильный ключ в каталоге
+export interface Invocation {
+  id: string;
   name: string;
   description: string;
-  category: ItemCategory;
-  price: number;
-  weight?: number;
-  modifiers?: ItemModifiers;
+  prerequisite?: string;
+  minLevel?: number;
+  pact?: string;
 }
 
+export interface Metamagic {
+    id: string;
+    name: string;
+    description: string;
+    cost: number;
+    ruleset: Ruleset;
+}
 
+export interface Infusion {
+    id: string;
+    name: string;
+    description: string;
+    minLevel?: number;
+    prerequisite?: string;
+}
+
+export interface CharacterClass {
+  type: ClassType;
+  level: number;
+  subclass?: string;
+  customName?: string; // User defined name for Custom classes
+}
+
+export interface NoteSection {
+    id: string;
+    title: string;
+    content: string;
+}
 
 export interface Character {
   id: string;
   name: string;
-  concept: string; // Description/Appearance
-  specialization: string; // Class/Archetype
-  rank: string; // Calculated from Origins
-  clan: string;
-  patronGod: God;
-  level: number;
-  experience: number;
+  ruleset: Ruleset; // New field for 2014 vs 2024
+  race: RaceType;
+  subrace?: string;
+  /**
+   * Кастомное название расы (используется когда race === RaceType.CUSTOM)
+   */
+  raceCustomName?: string;
+
+
+  // Боевые стили по классам
+  fighterFightingStyle?: string | null;  // стиль воина
+  paladinFightingStyle?: string | null;  // стиль паладина
+  rangerFightingStyle?: string | null;   // стиль следопыта
+
+  // Друид: выбор специализаций/форм
+  druidLandCircleTerrain?: string | null; // Круг Земли: выбранная местность
+  druidStarryForm?: string | null;        // Круг Звёзд: выбранный звездный облик
+
+  draconicAncestry?: string; // Идентификатор драконьего предка для драконорожденных
+  customRaceName?: string;   // User defined name
+
+  initiativeBonus?: number; // Дополнительный бонус к инициативе (от черт, предметов и т.п.)
+
+  
+  // Legacy fields kept for backward compat, but `classes` is source of truth
+  class: ClassType; // Primary class
+  /**
+   * Кастомное название класса (используется если игрок выбрал «Свой класс» при создании)
+   */
+  classCustomName?: string;
+  subclass?: string;
+  level: number; // Total level
+  
+  classes: CharacterClass[]; // Multi-class support
+  
+  inspiration: boolean; // New Field
+
+  stats: Stats;
+  savingThrows: (keyof Stats)[]; // explicit list of proficient saves
   hp: {
     current: number;
     max: number;
+    temp: number;
   };
-  energy: {
-    current: number;
-    max: number;
+  hitDice?: {
+      current: number;
+      max: number;
   };
-  attributes: Record<AttributeName, number>;
-  skills: Skill[];
-    skillPowers?: {
-    [skillId: string]: {
-      [level: number]: 'A' | 'B';
-    };
+  deathSaves: {
+    successes: number;
+    failures: number;
   };
+  ac: number; 
+  shield: {
+    equipped: boolean;
+    bonus: number; 
+  };
+  equippedArmor?: Armor; // Updated type
+  speed: number;
+  initiative: number;
+  spellcastingAbility: keyof Stats; // 'int', 'wis', 'cha'
+  spellSlots: SpellSlots;
+  pactMagic: PactMagicSlots; // Warlock slots
+  
+  proficiencies: string[]; // Custom text tags for tool/lang proficiencies
+  skills: Skill[]; 
+  weapons: Weapon[];
   inventory: InventoryItem[];
-  credits: number;
-  traumas?: Trauma[];
-  inventory: InventoryItem[];
-  ship?: Ship;
-  positiveTraits: string[];
-  negativeTraits: string[];
+  wallet: Wallet;
+  spells: Spell[];
+  features: Feature[];
+    // Выборы тотемного варвара (Путь Тотемного Воина)
+  barbarianTotemChoices?: {
+    level3?: 'bear' | 'eagle' | 'wolf' | 'elk' | 'tiger';
+    level6?: 'bear' | 'eagle' | 'wolf' | 'elk' | 'tiger';
+    level14?: 'bear' | 'eagle' | 'wolf' | 'elk' | 'tiger';
+  };
 
-  // Корабль
-  ship?: Ship;
+  invocations: string[]; // IDs of learnt invocations
+  // Выбор тотемных духов варвара (по уровням 3 / 6 / 14)
+  barbarianTotemChoices?: {
+    level3?: string;   // id из TOTEM_SPIRITS (bear, eagle, wolf, elk, tiger)
+    level6?: string;
+    level14?: string;
+  };
 
-  // Traits
-  positiveTraits: string[];
-  negativeTraits: string[];
 
-  // Social
-  reputation: Record<Faction, number>;
-  clanRelations: Record<GreatClan, number>;
+  // Sorcerer Specific
+  sorceryPoints?: {
+      current: number;
+      max: number;
+  };
+  metamagic?: string[]; // IDs of learnt metamagics
+
+  // Artificer Specific
+  infusions?: string[]; // IDs of known infusions
 
   backstory: string;
-}
-export interface Trauma {
-  id: string;
-  code: string;      // К66: 11–66
-  name: string;      // Название травмы
-  death: string;     // 'Нет', 'Да', 'Да, –1' и т.п.
-  deadline: string;  // Крайний срок (например, 'к6 дней', 'к6 часов', '-')
-  effect: string;    // Краткое описание эффекта
-  period: string;    // Период восстановления (например, 'к6', '2к6', '-')
-}
-export type ShipModuleStatus = 'ok' | 'damaged' | 'critical';
+  notes: string; // Legacy
+  customNotes: NoteSection[]; // New editable sections
+  avatarUrl?: string;
+  alignment?: string;
+  background?: string;
+  /**
+   * ID предыстории из мастера создания (например 'acolyte', 'soldier2024', 'custom2014', 'custom2024').
+   * Нужен, чтобы можно было понять, какая предыстория выбрана, и при необходимости открыть настройки.
+   */
+  backgroundId?: string;
+  /**
+   * Кастомное название предыстории (используется когда backgroundId === 'custom2014' или 'custom2024')
+   */
+  backgroundCustomName?: string;
 
-export interface ShipModule {
-  id: string;
-  name: string;
-  type: string; // например: 'bridge', 'docking', 'fuel', 'living', 'medbay', 'chapel', 'weapon'
-  status: ShipModuleStatus;
-  notes?: string;
-}
 
-export interface Ship {
-  id: string;
-  name: string;
-  className: string; // например: 'Корвет', 'Фрегат'
-  hull: {
-    current: number;
-    max: number;
+  /**
+   * Настройки «Своя предыстория» (и при желании — расширение для других предысторий).
+   * Поля разделены по редакциям, но могут храниться вместе (зависит от ruleset персонажа).
+   */
+  customBackground?: {
+    // 2014
+    skills?: Skill[];              // 2 навыка на выбор
+    tools?: string[];              // владения инструментами
+    languages?: string[];          // языки
+    equipment?: InventoryItem[];   // добавляемые предметы
+    gp?: number;                   // добавочное золото
+
+    // 2024
+    asiChoices?: (keyof Stats)[];  // 3 характеристики (+1/+1/+1)
+    featId?: string;               // черта из FEAT_LIBRARY
+    featCustomName?: string;       // своя черта: название
+    featCustomText?: string;       // своя черта: описание
+    skills2024?: Skill[];          // 2 навыка на выбор (от предыстории)
+
+    tools2024?: string[];          // инструменты (2024)
+    equipment2024?: InventoryItem[]; // снаряжение (2024)
+
+    description?: string;          // текстовое описание предыстории
   };
-  energy: {
-    current: number;
-    max: number;
-  };
-  fuel?: { current: number; max: number };
-  initiativeBonus?: number;
 
-  conditions?: { id: string; name: string; description: string }[];
-  crewRoles?: { id: string; role: string; name: string; notes?: string }[];
-  weapons?: { id: string; name: string; damage: string; range?: string; notes?: string }[];
-
-  
-   crew: {
-    current: number;
-    max: number;
-  };
-  modules: ShipModule[];
-  cargoNotes: string;
-  personalCabinNotes?: string;
 }
 
-
-
-// --- New Interfaces for Character Creator ---
-
-export interface EquipmentOption {
-  name: string;
-  description: string;
-  quantity: number;
-  equipped: boolean;
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'model';
+  text: string;
+  timestamp: number;
 }
 
-export interface EquipmentChoice {
-  optionA: EquipmentOption;
-  optionB: EquipmentOption;
+// New Interface for passing damage roll data
+export interface DamageRollConfig {
+    dice: string;
+    modifier: number;
+    label: string;
+    damageType?: string;
+    isCritical?: boolean;
 }
 
-export interface SpecializationData {
-  name: string;
-  variations: string; // Flavor text listing variations
-  recommendedSkills: string[];
-  reputationMod: number; // Applied to all factions
-  equipmentChoices: EquipmentChoice[]; // 4 rows of choices
-}
+export const DEFAULT_STATS: Stats = {
+  str: 10,
+  dex: 10,
+  con: 10,
+  int: 10,
+  wis: 10,
+  cha: 10
+};
